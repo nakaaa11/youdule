@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Youdule</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    </head>
+    <body>
+        <div class="box">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <strong class="title is-3">Youdule</strong>
+                </div>
+                <div id="navbarBasicExample" class="navber-menu">
+                    <div class="navbar-start">
+                        <a href="http://127.0.0.1:8000/" class="navbar-item">Home</a>
+                        <a href="http://127.0.0.1:8000/index/" class="navbar-item">search</a>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">More</a>
+                            <div class="navbar-dropdown">
+                                <a href="#" class="navbar-item">About</a>
+                                <a href="#" class="navbar-item">Jobs</a>
+                                <a href="#" class="navbar-item">Contract</a>
+                                <hr class="navbar-divider">
+                                <a href="#" class="navbar-item">Report an issue</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a href="http://127.0.0.1:8000/signup/" class="button is-primary">
+                                <strong>Sign Up</strong>
+                            </a>
+                            <a href="#" class="button is-light">Log in</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>  
+        </div>
+    </body>
+    </html>
+{% block content %}
+{% endblock %}

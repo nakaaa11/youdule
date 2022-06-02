@@ -1,0 +1,7 @@
+{% extends 'base.html' %}{% block content %}{% for streamer in streamers %}
+<div class="post">
+    <a href="https://www.youtube.com/channel/{{streamer.ch}}">{{streamer.name}}</a>
+    
+</div>
+{% endfor %}
+{% endblock %}

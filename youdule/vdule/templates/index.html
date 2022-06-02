@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<form action="{% url 'index' %}" method="post">
+    {% csrf_token %}
+    <div class="field">
+        <label class="label">チャンネル名</label>
+        <div class="control">
+            <input class="input" type="text" name="name" value="">
+            <input class="button" type="submit" value="送信">
+        </div>
+    </div>
+    <div>
+        <p>{{title}}</p>
+        <p>{{date}}</p>
+        <a href="https://www.youtube.com/watch?v={{video_id}}"><img src="{{thumbnail}}" alt="" ></a>
+    </div>
+</form>
+{% endblock %}
