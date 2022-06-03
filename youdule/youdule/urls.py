@@ -1,10 +1,16 @@
 from django.contrib import admin
 from django.urls import path
-from vdule.views import top, signup, index
+from django.conf.urls import include
+from django.contrib.auth import views as auth_views
+from vdule.views import top, signup, index, need
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', top),
     path('signup/', signup),
-    path('index/', index, name='index')
+    path('index/', index, name='index'),
+    path('login/', auth_views.LoginView.as_view(), name="login"),
+    path('logout/', auth_views.LogoutView.as_view(), name="logout"),
+    path('auth/', include('social_django.urls', namespace='social')),
+    path('need/', need, name="need"),
 ]

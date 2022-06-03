@@ -7,6 +7,7 @@ from vdule.forms import UserForm
 from .models import schedules, streamer
 from .forms import Form
 from .search_channel_id import search_channel_ids
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def top(request):
@@ -49,22 +50,30 @@ def index(request):
         r = requests.get(search_url, params=params)
         r = r.json()
 
-        title = r["items"][0]["snippet"]["title"]
-        thumbnail = r["items"][0]["snippet"]["thumbnails"]["default"]["url"]
-        video_id = r["items"][0]["id"]["videoId"]
+        if r["pageInfo"]["totalResults"] == 0:
+            return render(request, 'index.html')
 
-        params1 = {
-            'part' : 'liveStreamingDetails',
-            'key' : settings.DEVELOPER_KEY,
-            'id' : r["items"][0]["id"]["videoId"],
-        }
+        else:
+            title = r["items"][0]["snippet"]["title"]
+            thumbnail = r["items"][0]["snippet"]["thumbnails"]["default"]["url"]
+            video_id = r["items"][0]["id"]["videoId"]
 
-        r = requests.get(videos_url, params=params1)
-        date = r.json()
+            params1 = {
+                'part' : 'liveStreamingDetails',
+                'key' : settings.DEVELOPER_KEY,
+                'id' : r["items"][0]["id"]["videoId"],
+            }
 
-        date = date["items"][0]["liveStreamingDetails"]["scheduledStartTime"]
+            r = requests.get(videos_url, params=params1)
+            date = r.json()
 
-        return render(request, 'index.html', {'date':date, 'title':title, 'thumbnail':thumbnail, 'video_id':video_id})
+            date = date["items"][0]["liveStreamingDetails"]["scheduledStartTime"]
+
+            return render(request, 'index.html', {'date':date, 'title':title, 'thumbnail':thumbnail, 'video_id':video_id})
     
     else:
         return render(request, 'index.html')
+
+@login_required
+def need(request):
+    return render(request, 'need.html')
