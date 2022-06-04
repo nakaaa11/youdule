@@ -4,7 +4,7 @@
 
 <h2>ソーシャルサービスを選択してログイン</h2>
   <ul>
-    <li><a href="{% url 'social:begin' 'google-oauth2' %}">Googleでログイン</a></li>
+    <li><a href="{% url 'social:begin' 'google-oauth2' %}?scope=https://googleapis.com/auth/youtubepartnerchannel-audit">Googleでログイン</a></li>
   </ul>
 
 {% endblock %}

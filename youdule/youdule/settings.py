@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+import google.oauth2.credentials
+import google_auth_oauthlib.flow
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'vdule',
     'social_django',
+
     # 'social.apps.django_app.default'
 ]
 
@@ -138,8 +141,29 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '586739907481-sf1v6sq06bmmhsgs1fnirnl3u9ul68u1.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '586739907481-emq57agkldsggpc4nuq6i8ika1d99t9r.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 
 LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    # 'vdule.pipeline.get_avatar', # <- pipeline.pyというファイルのget_avatarメソッドを指定
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)
+
+flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('client_secrets.json', scopes=['https://www.googleapis.com/auth/youtubepartnerchannel-audit'])
+flow.redirect_uri = 'http://127.0.0.1:8000/'
+authorization_uri, state = flow.authorization_url(
+    access_type = 'offline',
+    include_granted_scopes='true',
+    prompt = 'consent',
+)

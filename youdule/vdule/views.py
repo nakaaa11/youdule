@@ -8,6 +8,11 @@ from .models import schedules, streamer
 from .forms import Form
 from .search_channel_id import search_channel_ids
 from django.contrib.auth.decorators import login_required
+import google_auth_oauthlib.flow
+import google.oauth2.credentials
+
+CLIENT_SECRETS_FILE = 'client_secret.json'
+SCOPES = ['https://www.googleapis.com/auth/youtubepartner-channel-audit']
 
 # Create your views here.
 def top(request):
@@ -77,3 +82,31 @@ def index(request):
 @login_required
 def need(request):
     return render(request, 'need.html')
+
+# def logged_out(request):
+#     return render(request, 'registration/logged_out.html')
+
+
+# def auth():
+#   # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
+#     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+#         CLIENT_SECRETS_FILE, scopes=SCOPES)
+
+#   # The URI created here must exactly match one of the authorized redirect URIs
+#   # for the OAuth 2.0 client, which you configured in the API Console. If this
+#   # value doesn't match an authorized URI, you will get a 'redirect_uri_mismatch'
+#   # error.
+#     flow.redirect_uri = 'http://127.0.0.1:8000'
+
+#     authorization_url = flow.authorization_url(
+#          # Enable offline access so that you can refresh an access token without
+#          # re-prompting the user for permission. Recommended for web server apps.
+#         access_type= 'offline',
+#           prompt = 'consent',
+#         include_granted_scopes = 'true')
+#           # Enable incremental authorization. Recommended as a best practice.
+
+#   # Store the state so the callback can verify the auth server response.
+
+
+#     return redirect(authorization_url)
