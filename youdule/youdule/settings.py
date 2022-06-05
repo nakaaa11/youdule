@@ -160,7 +160,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.user_details',
 )
 
-flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('client_secrets.json', scopes=['https://www.googleapis.com/auth/youtubepartnerchannel-audit'])
+flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('client_secrets.json', scopes=['https://www.googleapis.com/auth/youtube'])
 flow.redirect_uri = 'http://127.0.0.1:8000/'
 authorization_uri, state = flow.authorization_url(
     access_type = 'offline',
