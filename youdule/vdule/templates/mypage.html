@@ -1,7 +1,7 @@
-{% extends 'base.html' %}{% for title in titles %}
+{% extends 'base.html' %}{% for i in lists %}
 <div>
-    <p>{{title}}</p>
-    <p>{{dates}}</p>
-    <a href="https://www.youtube.com/watch?v={{video_ids}}"><img src="{{thumbnails}}" alt="" ></a>
+    <p>{{i.0}}</p>
+    <p>{{i.1}}</p>
+    <a href="https://www.youtube.com/watch?v={{i.3}}"><img src="{{i.2}}" alt="" ></a>
 </div>
 {% endfor %}

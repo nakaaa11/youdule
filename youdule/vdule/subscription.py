@@ -1,12 +1,9 @@
 def get_subscriptions():
-  import pandas as pd
   import os
   import sys
 
   import httplib2
-  import requests
   from googleapiclient.discovery import build
-  from googleapiclient.errors import HttpError
   from oauth2client.client import flow_from_clientsecrets
   from oauth2client.file import Storage
   from oauth2client.tools import argparser, run_flow
@@ -70,5 +67,6 @@ def get_subscriptions():
     subscriptions_list.extend(list(map(lambda item: item["snippet"]["resourceId"]["channelId"], response["items"])))
     request = youtube.subscriptions().list_next(request, response)
 
-  subscriptions = subscriptions_list[0]
-  return subscriptions
+  # subscriptions = subscriptions_list[0]
+  print(subscriptions_list)
+  return subscriptions_list
