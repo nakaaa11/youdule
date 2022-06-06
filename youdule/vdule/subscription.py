@@ -70,11 +70,5 @@ def get_subscriptions():
     subscriptions_list.extend(list(map(lambda item: item["snippet"]["resourceId"]["channelId"], response["items"])))
     request = youtube.subscriptions().list_next(request, response)
 
-  subscriptions = []
-  # subscriptions.append(pd.DataFrame(subscriptions_list))
-  subscriptions.append(subscriptions_list)
-  subscriptions = subscriptions[0]
-  print(subscriptions)
+  subscriptions = subscriptions_list[0]
   return subscriptions
-
-get_subscriptions()

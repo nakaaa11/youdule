@@ -85,37 +85,29 @@ def index(request):
     else:
         return render(request, 'index.html')
 
-@login_required
+
+# @login_required
 def need(request):
-    return render(request, 'need.html')
+    first_name_list = ["ichiro", "hideki", "hideo"]
+    second_name_list = ["suzuki", "matsui", "nomo"]
+    l4 = []
 
-# def logged_out(request):
-#     return render(request, 'registration/logged_out.html')
+    for i in range(len(first_name_list)):
+        l3 = []
+        l3.append(first_name_list[i])
+        l3.append(second_name_list[i])
+        l4.append(l3)
 
+    print(l4)
+    # temp_list = []
+    # for i, _ in enumerate(first_name_list):
+    #     temp_list.append({
+    #         'first_name': first_name_list[i],
+    #         'second_name': second_name_list[i],
+    #     })
 
-# def auth():
-#   # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
-#     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-#         CLIENT_SECRETS_FILE, scopes=SCOPES)
+    return render(request, 'need.html', {"l4": l4})
 
-#   # The URI created here must exactly match one of the authorized redirect URIs
-#   # for the OAuth 2.0 client, which you configured in the API Console. If this
-#   # value doesn't match an authorized URI, you will get a 'redirect_uri_mismatch'
-#   # error.
-#     flow.redirect_uri = 'http://127.0.0.1:8000'
-
-#     authorization_url = flow.authorization_url(
-#          # Enable offline access so that you can refresh an access token without
-#          # re-prompting the user for permission. Recommended for web server apps.
-#         access_type= 'offline',
-#           prompt = 'consent',
-#         include_granted_scopes = 'true')
-#           # Enable incremental authorization. Recommended as a best practice.
-
-#   # Store the state so the callback can verify the auth server response.
-
-
-#     return redirect(authorization_url)
 
 def mypage(request):
     channel_ids = get_subscriptions()
@@ -126,7 +118,7 @@ def mypage(request):
     thumbnails = []
     video_ids =[]
     dates = []
-    # print(channel_ids) 
+
     for channelId in channel_ids:
         params = {
             'part' : 'snippet',
@@ -140,11 +132,15 @@ def mypage(request):
 
         r = requests.get(search_url, params=params)
         r = r.json()
-        print(r)
+
+        if r["error"]["code"] == 403:
+            print('The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.')
+
         try:
             titles.append(r["items"][0]["snippet"]["title"])
             thumbnails.append(r["items"][0]["snippet"]["thumbnails"]["default"]["url"])
             video_ids.append(r["items"][0]["id"]["videoId"])
+
         except:
             print("error, break")
             break
@@ -159,7 +155,13 @@ def mypage(request):
         r = requests.get(videos_url, params=params1)
         r = r.json()
 
-        dates.append(r["items"][0]["liveStreamingDetails"]["scheduledStartTime"])
-        dates = dates + timedelta(hours=9)
+        try:
+            dates.append(r["items"][0]["liveStreamingDetails"]["scheduledStartTime"])
+            dates = dates + timedelta(hours=9)
 
+        except:
+            print('error, break')
+            break
+
+    print("good")
     return render(request, 'mypage.html', {'dates':dates, 'titles':titles, 'thumbnails':thumbnails, 'video_ids':video_ids})
