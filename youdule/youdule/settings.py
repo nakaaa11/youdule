@@ -131,7 +131,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-DEVELOPER_KEY='AIzaSyDqPx4nsLzg3ttJfKv1pJ_Ex4pZ4gjdYGw'
+# DEVELOPER_KEY='AIzaSyDqPx4nsLzg3ttJfKv1pJ_Ex4pZ4gjdYGw'
+DEVELOPER_KEY = 'AIzaSyD4wL0UDwwDBkDQnsNALvRkoQSIWDeOtC4'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',  # for Google authentication
