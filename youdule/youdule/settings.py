@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'vdule',
     'social_django',
+    "youdule",
 
     # 'social.apps.django_app.default'
 ]

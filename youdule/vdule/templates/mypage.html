@@ -1,7 +1,18 @@
-{% extends 'base.html' %}{% for i in lists %}
-<div>
-    <p>{{i.0}}</p>
-    <p>{{i.1}}</p>
-    <a href="https://www.youtube.com/watch?v={{i.3}}"><img src="{{i.2}}" alt="" ></a>
-</div>
-{% endfor %}
+{% extends 'base.html' %}
+<section>
+    <div class="tile is-ancestor">
+        <div class="tile is-parent is-vertical">
+        {% for i in lists %}
+         <article class="tile is-child notification is-primary">
+            <a href="https://www.youtube.com/watch?v={{i.1}}">
+               <img src="{{i.2}}" alt="">
+            </a>
+            <a href="https://www.youtube.com/channel/{{i.3}}">
+                <p class="subtitle">{{i.0}}</p>
+            </a>
+        </article>
+        {% endfor %}
+        </div>
+    </div>
+</section>
+  {% endblock %}

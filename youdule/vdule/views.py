@@ -55,7 +55,8 @@ def index(request):
                 'channelId' : channel_id,
                 'eventType' : 'upcoming',
                 'type' : 'video',
-                'order' : 'date'
+                'order' : 'date',
+                'fields': 'items',
             }
 
             r = requests.get(search_url, params=params)
@@ -70,6 +71,7 @@ def index(request):
                     'part' : 'liveStreamingDetails',
                     'key' : settings.DEVELOPER_KEY,
                     'id' : r["items"][0]["id"]["videoId"],
+                    'fields': 'items'
                 }
 
                 r = requests.get(videos_url, params=params1)
@@ -127,6 +129,7 @@ def mypage(request):
             'eventType' : 'completed',
             'type' : 'video',
             'order' : 'date',
+            'fields' : 'items'
         }
 
         r = requests.get(search_url, params=params)
@@ -150,6 +153,7 @@ def mypage(request):
             'part' : 'liveStreamingDetails',
             'key' : settings.DEVELOPER_KEY,
             'id' : video_id,
+            'fields': 'items/liveStreamingDetails/scheduledStartTime'
         }
 
         r = requests.get(videos_url, params=params1)

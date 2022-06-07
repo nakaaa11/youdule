@@ -1,12 +1,23 @@
 {% extends 'base.html' %}
+{% load tags %}
 {% block content %}
-{% for i in lists %}
-<h3>{{i.0}}</h3>
-<a href="https://www.youtube.com/watch?v={{i.1}}">
-    <img class="thumbnail" src="{{i.2}}" alt="">
-</a>
 
-<a href="https://www.youtube.com/channel/{{i.3}}">チャンネルへ</a>
-<hr>
-{% endfor %}
+
+
+<section>
+  <div class="tile is-ancestor">
+    <div class="tile is-parent is-vertical">
+      {% for i in lists %}
+      <article class="tile is-child notification is-primary">
+        <a href="https://www.youtube.com/watch?v={{i.1}}">
+          <img src="{{i.2}}" alt="">
+        </a>
+        <a href="https://www.youtube.com/channel/{{i.3}}">
+          <p class="subtitle">{{i.0}}</p>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 {% endblock %}
