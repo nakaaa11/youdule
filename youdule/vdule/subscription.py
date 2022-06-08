@@ -70,3 +70,5 @@ def get_subscriptions():
   # subscriptions = subscriptions_list[0]
   print(subscriptions_list)
   return subscriptions_list
+
+get_subscriptions()

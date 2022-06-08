@@ -132,8 +132,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# DEVELOPER_KEY='AIzaSyDqPx4nsLzg3ttJfKv1pJ_Ex4pZ4gjdYGw'
-DEVELOPER_KEY = 'AIzaSyD4wL0UDwwDBkDQnsNALvRkoQSIWDeOtC4'
+DEVELOPER_KEY='AIzaSyDqPx4nsLzg3ttJfKv1pJ_Ex4pZ4gjdYGw'
+# DEVELOPER_KEY = 'AIzaSyD4wL0UDwwDBkDQnsNALvRkoQSIWDeOtC4'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',  # for Google authentication
@@ -143,10 +143,10 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '586739907481-emq57agkldsggpc4nuq6i8ika1d99t9r.apps.googleusercontent.com'
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '9637017603-icqu55ui15g02o2lv8bl89g34h0ccapc.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '586739907481-emq57agkldsggpc4nuq6i8ika1d99t9r.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '9637017603-icqu55ui15g02o2lv8bl89g34h0ccapc.apps.googleusercontent.com'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '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'
 LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
 
