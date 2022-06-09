@@ -184,6 +184,7 @@ def mypage(request):
             'part' : 'snippet',
             'key' : settings.DEVELOPER_KEY,
             'id' : video_id,
+            'fields' : 'items/snippet/liveBroadcastContent'
         }
 
         res = requests.get(videos_url, params=params1)
@@ -228,5 +229,8 @@ def mypage(request):
 
         else:
             continue
+        
+        # lists = sorted(lists, key=lambda i: i[5])
+
 
     return render(request, 'mypage.html', {"lists": lists})
