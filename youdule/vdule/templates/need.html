@@ -1,23 +1,21 @@
 {% extends 'base.html' %}
-{% load tags %}
 {% block content %}
-
-
-
 <section>
-  <div class="tile is-ancestor">
-    <div class="tile is-parent is-vertical">
-      {% for i in lists %}
-      <article class="tile is-child notification is-primary">
-        <a href="https://www.youtube.com/watch?v={{i.1}}">
-          <img src="{{i.2}}" alt="">
-        </a>
-        <a href="https://www.youtube.com/channel/{{i.3}}">
-          <p class="subtitle">{{i.0}}</p>
-        </a>
-      </article>
-      {% endfor %}
+    <div class="tile is-ancestor">
+        <div class="tile is-parent is-vertical">
+        {% for i in lists %}
+         <article class="tile is-child notification is-primary">
+            <a href="https://www.youtube.com/watch?v={{i.3}}">
+               <img src="{{i.4}}" alt="">
+            </a>
+            <a href="https://www.youtube.com/channel/{{i.1}}">
+                <p class="subtitle">{{i.0}}</p>
+                <p class="subtitle">{{i.2}}</p>
+                <p class="subtitle">開始時刻{{i.5}}</p>
+            </a>
+        </article>
+        {% endfor %}
+        </div>
     </div>
-  </div>
 </section>
-{% endblock %}
+  {% endblock %}

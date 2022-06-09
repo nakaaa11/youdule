@@ -8,9 +8,10 @@ from django.db.models.signals import post_save
 class schedules(models.Model):
     title = models.CharField(max_length=50)
 
-class streamer(models.Model):
+class Streamer(models.Model):
     name = models.CharField(max_length=50)
-    ch = models.TextField(null=True)
+    channel_id = models.TextField()
+    playlists_id = models.TextField()
 
 class UserInfo(models.Model):
     name = models.CharField(max_length=50)
