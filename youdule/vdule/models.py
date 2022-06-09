@@ -10,8 +10,7 @@ class schedules(models.Model):
 
 class Streamer(models.Model):
     name = models.CharField(max_length=50)
-    channel_id = models.TextField()
-    playlists_id = models.TextField()
+    channel_id = models.CharField(max_length=24, null=True)
 
 class UserInfo(models.Model):
     name = models.CharField(max_length=50)
