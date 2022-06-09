@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import os
 import sys
@@ -148,17 +149,19 @@ def mypage(request):
     channel_id = r["items"][0]["id"]
 
     channel_ids = []
+    channel_names = []
     #自身のYouTubeIDから登録チャンネルのリストを取得
     request = youtube.subscriptions().list(
         part="snippet",
         channelId=channel_id,
         maxResults=50,
-        fields="nextPageToken, items/snippet/resourceId/channelId",
+        fields="nextPageToken, items/snippet",
     )
 
     while request:
         response = request.execute()
         channel_ids.extend(list(map(lambda item: item["snippet"]["resourceId"]["channelId"], response["items"])))
+        channel_names.extend(list(map(lambda item: item["snippet"]["title"], response["items"])))
         request = youtube.subscriptions().list_next(request, response)
 
     lists = []
@@ -173,6 +176,9 @@ def mypage(request):
         title = mls_dic['entries'][0]['title']
         thumbnail = mls_dic['entries'][0]['media_thumbnail'][0]['url']
         author = mls_dic['entries'][0]['authors'][0]['name']
+
+        if not Streamer.objects.filter(channel_id=channelId).exists():
+            Streamer.objects.create(name=author, channel_id=channelId)
 
         params1 = {
             'part' : 'snippet',
@@ -197,8 +203,10 @@ def mypage(request):
             res = res.json()
 
             date = res["items"][0]["liveStreamingDetails"]["scheduledStartTime"]
+            date = date.replace('T', ' ').replace('Z', '')
+            date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            date = date + timedelta(hours=9)
 
-            # dates = dates + timedelta(hours=9)
             l = []
             l.append(author)
             l.append(channelId)
@@ -206,6 +214,16 @@ def mypage(request):
             l.append(video_id)
             l.append(thumbnail)
             l.append(date)
+            lists.append(l)
+
+        elif status == 'live':
+            l = []
+            l.append(author)
+            l.append(channelId)
+            l.append(title)
+            l.append(video_id)
+            l.append(thumbnail)
+            l.append('配信中')
             lists.append(l)
 
         else:

@@ -10,12 +10,17 @@
             </a>
             <a href="https://www.youtube.com/channel/{{i.1}}">
                 <p class="subtitle">{{i.0}}</p>
-                <p class="subtitle">{{i.2}}</p>
-                <p class="subtitle">開始時刻{{i.5}}</p>
             </a>
+            <p class="subtitle">{{i.2}}</p>
+            {% if i.5 == '配信中' %}
+            <p class="subtitle">配信中</p>
+            {% else %}
+            <p class="subtitle">開始時刻:{{i.5}}</p>
+            {% endif %}
         </article>
         {% endfor %}
         </div>
     </div>
 </section>
   {% endblock %}
+  
