@@ -1,18 +1,12 @@
-from datetime import datetime
-import json
 import os
 import sys
-from datetime import timedelta
-from pprint import pprint
-from turtle import st
-from urllib import response
-import google.oauth2.credentials
-import google_auth_oauthlib.flow
+from datetime import datetime, timedelta
+
+import feedparser
 import httplib2
 import requests
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from googleapiclient.discovery import build
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.file import Storage
@@ -23,10 +17,6 @@ from vdule.forms import UserForm
 from .forms import Form
 from .models import Streamer
 from .search_channel_id import search_channel_ids
-
-import feedparser
-
-# from .subscription import get_subscriptions
 
 CLIENT_SECRETS_FILE = '/Users/nak/Desktop/python_lesson/app/youdule/client_secrets.json'
 SCOPES = ['https://www.googleapis.com/auth/youtubepartner-channel-audit']
@@ -92,9 +82,17 @@ def index(request):
                 date = r.json()
 
                 date = date["items"][0]["liveStreamingDetails"]["scheduledStartTime"]
+                date = date.replace('T', ' ').replace('Z', '')
+                date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+                date = date + timedelta(hours=9)
 
-                return render(request, 'index.html', {'date':date, 'title':title, 'thumbnail':thumbnail, 'video_id':video_id})
-
+                now = datetime.now()
+                two_days_later = now + timedelta(days=2)
+                
+                if date <= two_days_later:
+                    return render(request, 'index.html', {'date':date, 'title':title, 'thumbnail':thumbnail, 'video_id':video_id})
+                else:
+                    return render(request, 'index.html')
             except:
                 return render(request, 'index.html')
 
@@ -191,8 +189,10 @@ def mypage(request):
         res = res.json()
 
         status = res['items'][0]['snippet']['liveBroadcastContent']
+        now = datetime.now()
+        two_days_later = now + timedelta(days=2)
 
-        if status == 'upcoming':    
+        if status == 'upcoming':
             params1 = {
                 'part' : 'liveStreamingDetails',
                 'key' : settings.DEVELOPER_KEY,
@@ -208,14 +208,15 @@ def mypage(request):
             date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
             date = date + timedelta(hours=9)
 
-            l = []
-            l.append(author)
-            l.append(channelId)
-            l.append(title)
-            l.append(video_id)
-            l.append(thumbnail)
-            l.append(date)
-            lists.append(l)
+            if date <= two_days_later:
+                l = []
+                l.append(author)
+                l.append(channelId)
+                l.append(title)
+                l.append(video_id)
+                l.append(thumbnail)
+                l.append(date)
+                lists.append(l)
 
         elif status == 'live':
             l = []
@@ -230,7 +231,4 @@ def mypage(request):
         else:
             continue
         
-        # lists = sorted(lists, key=lambda i: i[5])
-
-
     return render(request, 'mypage.html', {"lists": lists})
